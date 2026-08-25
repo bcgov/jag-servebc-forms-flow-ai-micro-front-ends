@@ -1,0 +1,118 @@
+name: Reusable CI Workflow
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: 'Working directory for the CI jobs'
+        required: true
+        type: string
+      node_version:
+        description: 'Node.js version to use'
+        required: false
+        type: string
+        default: '18.x'
+      enable_lint:
+        description: 'Enable linting job'
+        required: false
+        type: boolean
+        default: false
+      enable_test:
+        description: 'Enable testing job'
+        required: false
+        type: boolean
+        default: false
+      enable_build:
+        description: 'Enable build job'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  setup-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - run: "true"
+
+  Lint:
+    if: ${{ inputs.enable_lint }}
+    needs: setup-job
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node-version: ["${{ inputs.node_version }}"]
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          npm ci --legacy-peer-deps
+      - name: Linting
+        run: |
+          npm run lint
+
+  Test:
+    if: ${{ inputs.enable_test }}
+    needs: setup-job
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node-version: ["${{ inputs.node_version }}"]
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          npm ci --legacy-peer-deps
+      - name: Unit Test
+        id: test
+        run: |
+          npm test a
+
+  Build:
+    if: ${{ inputs.enable_build }}
+    needs: setup-job
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node-version: ["${{ inputs.node_version }}"]
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          npm ci --legacy-peer-deps
+      - name: build to check strictness
+        id: build
+        run: |
+          npm run build

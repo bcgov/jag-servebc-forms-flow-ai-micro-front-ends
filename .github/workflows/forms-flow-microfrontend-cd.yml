@@ -1,0 +1,36 @@
+name: Push forms-flow-microfrontend to ghcr.io
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'forms-flow-admin/**'
+      - 'forms-flow-components/**'
+      - 'forms-flow-integration/**'
+      - 'forms-flow-nav/**'
+      - 'forms-flow-review/**'
+      - 'forms-flow-service/**'
+      - 'forms-flow-submissions/**'
+      - 'forms-flow-theme/**'
+      - 'webpack.formio.js'
+      - 'Dockerfile'
+      - 'nginx.conf'
+      - 'VERSION'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-push-image:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/cd-workflow.yml
+    with:
+      DOCKER_CONTEXT: .
+      DOCKER_FILE: Dockerfile
+      DOCKER_IMAGE_NAME: forms-flow-microfrontend
+    secrets: inherit
