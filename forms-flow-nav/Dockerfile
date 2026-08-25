@@ -20,6 +20,17 @@ RUN npm install
 
 COPY . /forms-flow-nav/app/
 
+# webpack.config.js requires ../webpack.formio (shared monorepo-root file, not in this
+# package's own dir) -- stage it into the build context alongside this Dockerfile before
+# building, so it lands one level above the app dir here.
+COPY webpack.formio.js /forms-flow-nav/webpack.formio.js
+
+# Sidebar.scss imports ../../../forms-flow-theme/scss/v8-scss/mixins (a sibling package's
+# stylesheets) -- stage forms-flow-theme's scss/ dir into the build context (as
+# forms-flow-theme-scss/, since forms-flow-nav isn't a real sibling of forms-flow-theme
+# inside this isolated build context) and land it at the same relative path Sass expects.
+COPY forms-flow-theme-scss/ /forms-flow-nav/forms-flow-theme/scss/
+
 RUN npm run build:webpack
 
 

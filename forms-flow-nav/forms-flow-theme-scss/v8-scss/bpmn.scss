@@ -1,0 +1,66 @@
+
+$primary: var(--ff-primary);
+$gray-darkest: var(--ff-gray-darkest);
+$gray-x-light: var(--gray-x-light);
+.bpm-container{
+  height:100%;
+  position: absolute;
+  width: 100%;
+  overflow:hidden;
+}
+.bpmn-viewer-container{ 
+  position:relative; 
+  min-height: 60vh;
+  border: 1px solid #D1D2D3;
+  border-radius: 0.313rem;
+  margin-top: 1.688rem;
+  width: 100%;
+}
+
+
+ .grab-cursor {
+   cursor: move;
+   cursor: grab;
+ }
+ .highlight {
+  &:not(.djs-connection) {
+    .djs-visual {
+      > :nth-child(1) {
+        fill: $primary !important;
+      }
+    }
+  }
+  .djs-label {
+    fill: $white !important;
+  }
+}
+
+.btn_zoom{
+  position: relative;
+  bottom: 10em;
+  right: 2em !important;
+}
+
+.djs-container svg:focus {
+  outline: none !important;
+}
+
+.bpmn-main-container-editor{
+    width: 100%;
+    display: flex;
+    margin-bottom: 1rem;
+    height: auto;
+    resize: vertical;
+    max-height: 37.5rem;
+    min-height: 28.125rem;
+    border: 1px solid $gray-x-light;
+    border-radius:5px;
+
+}
+
+#js-properties-panel{
+  max-height: 37.5rem;
+}
+.flow-builder {
+  overflow: auto;
+}
