@@ -146,6 +146,8 @@ const Users = React.memo((props: any) => {
   const canRemoveRole = (rowData, item) => {
     // Minimum role enforcement: the last remaining role can't be removed
     if ((rowData?.role?.length || 0) <= 1) return false;
+    // The admin role is protected
+    if (item?.path === "/admin") return false;
     // The tenant creator's OWNER role is protected
     return !isProtectedOwnerRole(rowData, item);
   };
@@ -217,7 +219,9 @@ const Users = React.memo((props: any) => {
       sortable: false,
       renderCell: (params) => {
         const rowData = params.row;
-        const cell = rowData?.role;
+        const cell = rowData?.role?.filter(
+          (item) => item?.name !== "camunda-admin"
+        );
         return (
           <div className="d-flex flex-wrap col-12">
             {cell?.map((item, i) => (
@@ -268,6 +272,9 @@ const Users = React.memo((props: any) => {
       align: "right",
       renderCell: (params) => {
         const rowData = params.row;
+        const assignableRoles = roles.filter(
+          (role) => role.name?.replace(/\//g, "") !== "camunda-admin"
+        );
         const updateSelectedRoles = (role) => {
           if (selectedRoles.includes(role.id)) {
             setSelectedRoles([
@@ -339,8 +346,8 @@ const Users = React.memo((props: any) => {
               >
                 <Popover.Body>
                   <div className="role-list">
-                    {roles.length > 0 ? (
-                      roles.map((role, key) =>
+                    {assignableRoles.length > 0 ? (
+                      assignableRoles.map((role, key) =>
                         getRoleRepresentation(role, key, rowData)
                       )
                     ) : (
@@ -349,7 +356,7 @@ const Users = React.memo((props: any) => {
                   </div>
                   <hr />
                   <div className="done-button">
-                    {roles.length > 0 && (
+                    {assignableRoles.length > 0 && (
                       <V8CustomButton
                         label={t("Done")}
                         onClick={addUserPermission}
@@ -488,15 +495,19 @@ const Users = React.memo((props: any) => {
               >
                 {t("All roles")}
               </option>
-              {roles?.map((role, i) => (
-                <option
-                  key={i}
-                  value={role.name}
-                  data-testid={`users-roles-filter-option-${i}`}
-                >
-                  {formatRoleDisplayName(role.name, tenantKeyForRoleDisplay)}
-                </option>
-              ))}
+              {roles
+                ?.filter(
+                  (role) => role.name?.replace(/\//g, "") !== "camunda-admin"
+                )
+                .map((role, i) => (
+                  <option
+                    key={i}
+                    value={role.name}
+                    data-testid={`users-roles-filter-option-${i}`}
+                  >
+                    {formatRoleDisplayName(role.name, tenantKeyForRoleDisplay)}
+                  </option>
+                ))}
             </Form.Select>
           </div>
 
