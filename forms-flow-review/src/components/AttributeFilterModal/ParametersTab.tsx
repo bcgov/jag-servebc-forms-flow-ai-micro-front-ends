@@ -1,10 +1,17 @@
 import { Fragment } from "react";
-import { SelectDropdown,CustomTextInput } from "@formsflow/components";
+import { SelectDropdown,CustomTextInput,DateRangePicker } from "@formsflow/components";
 import { useTranslation } from "react-i18next";
+import { DOCUMENT_TYPES } from "../../constants";
 
-const ParametersTab = ({taskVariables, attributeData ,handleSelectChange, assigneeOptions, candidateOptions}) => {
-    const {t} = useTranslation();
-    
+
+
+const ParametersTab = ({taskVariables, attributeData, handleSelectChange, handleDatePickerChange, assigneeOptions, candidateOptions}) => {
+  const {t} = useTranslation();
+  const documentTypeOptions = DOCUMENT_TYPES.map((docType: { value: string; name: string }) => ({
+    value: docType.value,
+    label: docType.name,
+  }));
+  
   // Create unique identifier for fields with same key but different isFormVariable
   const getUniqueFieldKey = (item) => {
     return item.isFormVariable ? `${item.key}_form` : item.key;
@@ -60,6 +67,21 @@ const ParametersTab = ({taskVariables, attributeData ,handleSelectChange, assign
       />
     </div>
   );
+
+  const createDateRangePicker = (item, uniqueKey) => (
+    <div className="custom-input-container">
+      <label htmlFor={`${uniqueKey}-attribute-input`}>{t(item.label)}</label>
+      <DateRangePicker
+        value={attributeData[uniqueKey] || ""}
+        onChange={(val:any) => handleDatePickerChange(uniqueKey, val)}
+        dataTestId={`${uniqueKey}-attribute-input`}
+        ariaLabel={t(item.label)}
+        startDateAriaLabel={t("Start date")}
+        endDateAriaLabel={t("End date")}
+      />
+    </div>
+  );
+
   // Helper function to create checkbox dropdown
   const createCheckboxDropdown = (item) => {
     const uniqueKey = getUniqueFieldKey(item);
@@ -113,6 +135,14 @@ const ParametersTab = ({taskVariables, attributeData ,handleSelectChange, assign
       return item.isFormVariable 
         ? createFormInput(item, uniqueKey)
         : createSelectDropdown(item, uniqueKey, candidateOptions);
+    }
+
+    if (item.key === "documentType") {
+      return createSelectDropdown(item, uniqueKey, documentTypeOptions);
+    }
+
+    if (item.key === "nextAppearanceDate" || item.key === "servedDateForDisplay") {
+      return createDateRangePicker(item, uniqueKey);
     }
     
     return item.type === "checkbox" 
