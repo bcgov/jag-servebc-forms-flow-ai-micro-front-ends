@@ -25,7 +25,7 @@ import {
   setSelectedFilter,
   setFilterToEdit,
 } from "../../actions/taskActions";
-import { MULTITENANCY_ENABLED } from "../../constants";
+import { DOCUMENT_TYPES, MULTITENANCY_ENABLED } from "../../constants";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   fetchServiceTaskList,
@@ -222,6 +222,15 @@ const TaskListTable = () => {
       );
     }
 
+    if (sortKey === "documentType") {
+      const value = variables.find((v) => v.name === "documentType")?.value ?? "-";
+      return (
+        <div className={textClassName} style={textStyle}>
+          {DOCUMENT_TYPES.find((docType: { value: string; name: string }) => docType.value === value)?.name ?? value}
+        </div>
+      );
+    }
+
   //checking isFormVariable to avoid the inappropriate value setting when static and dynamic varibales are same
   if (!column.isFormVariable) {
     switch (sortKey) {
@@ -266,10 +275,10 @@ const TaskListTable = () => {
   if (!matchingVar) return "-";
 
   const dateTimeField = taskvariables.find(
-      (v) => v.key === sortKey && v.type === "datetime"
+      (v) => sortKey !== "nextAppearanceDate" && v.key === sortKey && v.type === "datetime"
     );
     const dateField = taskvariables.find(
-      (v) => v.key === sortKey && v.type === "day"
+      (v) => sortKey === "nextAppearanceDate" || (v.key === sortKey && v.type === "day")
     );
     const selectBoxes = taskvariables.find(
       (v) => v.key === sortKey && v.type === "selectboxes"

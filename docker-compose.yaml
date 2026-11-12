@@ -1,0 +1,9 @@
+services:
+  forms-flow-micro-front-ends:
+    container_name: forms-flow-micro-front-ends
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3061:8080"
+    restart: no

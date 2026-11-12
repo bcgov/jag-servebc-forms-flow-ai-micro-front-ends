@@ -50,3 +50,15 @@ export const CUSTOM_EVENT_TYPE = {
   ACTION_COMPLETE: "actionComplete",
   CANCEL_SUBMISSION: "cancelSubmission",
 };
+
+export const DOCUMENT_TYPES = (window._env_?.REACT_APP_DOCUMENT_TYPES || "")
+  .split(",")
+  .filter(Boolean)
+  .map((entry: string, index: number) => {
+    const [value, name] = entry.split(":");
+    return {
+      id: index + 1,
+      value: value || "",
+      name: name || value,
+    };
+  });
