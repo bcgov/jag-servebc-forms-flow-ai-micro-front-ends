@@ -298,6 +298,34 @@ const AttributeFilterModalBody = ({ onClose, handleSaveFilterAttributes, current
     setAttributeData((prevData) => ({ ...prevData, [name]: selectedValue }));
   };
 
+  const handleDatePickerChange = (name, value) => {
+    console.log(name, value);
+    let attributeName = name;
+    const formatDate = (date, isEndDate = false) => {
+      const dateObj = date instanceof Date ? date : new Date(date);
+      if (Number.isNaN(dateObj.getTime())) return date;
+
+      const datePart = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+      return `${datePart}T${isEndDate ? "23:59" : "00:00"}:00.000-0000`;
+    };
+
+    if (name.startsWith("nextAppearanceDate")) {
+      attributeName = "followUp";
+      setAttributeData((prevData) => ({
+        ...prevData,
+        [`${attributeName}After`]: formatDate(value.startDate),
+        [`${attributeName}Before`]: formatDate(value.endDate, true),
+      }));
+    } else if (name.startsWith("servedDate")) {
+      attributeName = "due";
+      setAttributeData((prevData) => ({
+        ...prevData,
+        [`${attributeName}After`]: formatDate(value.startDate),
+        [`${attributeName}Before`]: formatDate(value.endDate, true),
+      }));
+    }    
+  };
+
   const handleNameError = (e) => {
     const value = e.target.value;
     setFilterName(value);
@@ -380,7 +408,7 @@ const AttributeFilterModalBody = ({ onClose, handleSaveFilterAttributes, current
       
       // Process task-level fields from attributeFilter
       // Note: 'roles' is excluded here as it's handled separately from candidateGroup in initialData
-      const taskFields = ['submitterName', 'assignee', 'created', 'formName'];
+      const taskFields = ['submitterName', 'assignee', 'created', 'formName', 'due', 'followUp'];
       taskFields.forEach(fieldName => {
         const fieldValue = attributeFilter?.criteria?.[fieldName];
         if (fieldValue) {
@@ -479,12 +507,20 @@ const createFilterShareOption = (labelKey, value) => ({
     const getFilterData = (newProcessVariables): Filter => {
       const assignee = getAssignee();
       const candidateGroup = getCandidateGroup();
+      const dueAfter = attributeData["dueAfter"] || selectedFilter?.criteria?.dueAfter;
+      const dueBefore = attributeData["dueBefore"] || selectedFilter?.criteria?.dueBefore;
+      const followUpAfter = attributeData["followUpAfter"] || selectedFilter?.criteria?.followUpAfter;
+      const followUpBefore = attributeData["followUpBefore"] || selectedFilter?.criteria?.followUpBefore;
 
       const criteria = {
         ...selectedFilter.criteria,
         processVariables: newProcessVariables,
         assignee,
-        candidateGroup
+        candidateGroup,
+        dueAfter,
+        dueBefore,
+        followUpAfter,
+        followUpBefore
       };
 
       const { roles, users } = getTaskAccess();
@@ -761,6 +797,7 @@ const removeSlashFromValue = (value) => {
             taskVariables={taskVariables}
             attributeData={attributeData}
             handleSelectChange={handleSelectChange}
+            handleDatePickerChange={handleDatePickerChange}
             assigneeOptions={assigneeOptions}
             candidateOptions={candidateOptions}
           />

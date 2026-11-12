@@ -97,7 +97,7 @@ const MenuComponent = ({
     const root = document.documentElement;
     return isActive(menu) 
       ? getComputedStyle(root).getPropertyValue("--ff-white")
-      : getComputedStyle(root).getPropertyValue("--ff-primary");
+      : getComputedStyle(root).getPropertyValue("--ff-white");
   }, [isActive]);
   
   /**

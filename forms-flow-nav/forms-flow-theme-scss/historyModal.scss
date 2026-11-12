@@ -1,0 +1,149 @@
+$gray-medium: var(--ff-gray-medium);
+$primary: var(--ff-primary);
+$white-color: var(--ff-white);
+
+.history-modal-body {
+  $BP1: 46em;
+
+  @include paddingLvl2();
+
+  $colorMain: $gray-darkest;
+  $colorSecondary: $gray-medium;
+  $detailsWidth: $base*8;
+  $spaceBetweenVersions: $paddingLvl5S;
+  $spaceBetweenElementsInside: $paddingLvl5S;
+  $spaceBetweenElementsInsideBP1: $paddingLvl5TB;
+  $timelineLineLeft: $base*5;
+
+  position: relative;
+
+  container: history-modal-body / inline-size;
+
+  /* Timeline styles */
+  .timeline {
+    position: absolute;
+    bottom: 0;
+    left: $timelineLineLeft;
+    width: $lineThick;
+    height: 100%;
+
+    background-color: $colorMain !important; 
+    
+    z-index: 0;
+  }
+
+  .history-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    gap: $spaceBetweenVersions;
+
+    &:not(.submissions) > div {
+      &:nth-child(2) {
+        background-color: $primary-light;
+
+        border: $lineThin solid $primary-light;
+
+        & button {
+          opacity: 0;
+
+          pointer-events: none;
+        }
+      }
+    }
+
+    .version {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      padding: $paddingLvl5TB $paddingLvl5LR;
+      gap: $spaceBetweenElementsInside;
+
+      border: $lineThin solid $gray-medium;
+      border-radius: $borderRadiusHeightM;
+
+      background-color: $white-color; 
+
+      z-index: 2;
+
+      &.minor {
+        margin-left: $paddingLvl1S;
+      }
+
+      &.major {
+        border: $lineThin solid $gray-darkest;
+      }
+
+      .heading {
+        @include textBaseHightlight($fontSmallest);
+
+        display: flex;
+        flex-grow: 0.95;
+      }
+
+      .details {
+        display: flex;
+
+        gap: $paddingLvl5S;
+
+        & > div {
+          display: flex;
+          flex-direction: column;
+          width: $detailsWidth;
+
+          gap: $paddingLvl5S;
+        }
+
+        p {
+          &:nth-child(1) {
+            @include textBaseHightlight($fontSmallest, $gray-dark);
+          }
+
+          &:nth-child(2) {
+            @include textBase($fontSmallest, $gray-dark);
+          }
+        }
+      }
+    }
+  }
+
+  @container history-modal-body (max-width: #{$BP1}) {
+    .history-content {
+      &:not(.submissions) > div {
+        &:nth-child(2) {
+          & button {
+            display: none;
+          }
+        }
+      }
+      .version {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spaceBetweenElementsInsideBP1;
+
+        .details {
+          flex-wrap: wrap;
+          width: 100%;
+
+          & > div {
+            flex: 1;  
+            width: unset;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.analyse-submision-history-modal{
+  min-height: 80vh;
+}
+
+.form-view-modal-body {
+  .bundle-view-breadcumbs {
+    padding-top: 1rem !important;
+  }
+}

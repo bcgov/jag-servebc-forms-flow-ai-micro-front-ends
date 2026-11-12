@@ -1,0 +1,18 @@
+name: forms-flow-admin-CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - "forms-flow-admin/**"
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci-workflow.yml
+    with:
+      working_directory: ./forms-flow-admin
+      enable_lint: false
+      enable_test: false
+      enable_build: true

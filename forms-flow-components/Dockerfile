@@ -20,6 +20,11 @@ RUN npm install
 
 COPY . /forms-flow-components/app/
 
+# webpack.config.js requires ../webpack.formio (shared monorepo-root file, not in this
+# package's own dir) -- stage it into the build context alongside this Dockerfile before
+# building, so it lands one level above the app dir here.
+COPY webpack.formio.js /forms-flow-components/webpack.formio.js
+
 RUN npm run build:webpack
 
 

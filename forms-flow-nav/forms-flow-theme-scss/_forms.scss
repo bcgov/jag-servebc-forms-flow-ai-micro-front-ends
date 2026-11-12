@@ -1,0 +1,771 @@
+@import '_mixins';
+// Variables for reused values
+$primary: var(--ff-primary);
+$primary-light: var(--ff-primary-light);
+$gray-darkest: var(--ff-gray-darkest);
+$gray-medium: var(--ff-gray-medium);
+$gray-medium-dark: var(--ff-gray-medium-dark);
+$danger-color: var(--ff-danger);
+$white-color: var(--ff-white);
+$pill-bg-color: var(--pill-bg-color);
+
+.forms-text {
+  vertical-align: bottom;
+  margin-left: 0.625rem;
+  margin-bottom: 0;
+}
+
+.forms-text {
+  vertical-align: middle;
+  margin-left: 0.625rem;
+}
+
+select option:hover {
+  box-shadow: 0 0 0.625rem 6.25rem var(--ff-black) inset;
+}
+
+// forms table header classes
+.form_select {
+  width: 15%;
+}
+
+.form_operation {
+  width: 30%;
+}
+
+.form_title {
+  width: var(--spacer-250);
+}
+
+.input-group .input-group-addon {
+  position: absolute;
+  right: 0.3125rem;
+  top: 0.4375rem;
+}
+
+.input-group .radio-inline {
+  margin-left: var(--spacer-125);
+}
+
+// .input-group label {
+//   margin-right: var(--spacer-200);
+// }
+
+.select {
+  border-radius: var(--spacer-025) !important;
+  margin-left: var(--spacer-050);
+  max-width: 6.5rem;
+}
+
+.form_check {
+  margin-bottom: var(--spacer-125);
+}
+
+.form-view-wrapper {
+  min-height: 75vh;
+}
+
+.well {
+  border: 0.0625rem solid $gray-medium;
+  padding: var(--spacer-100);
+  background-color: $gray-medium;
+}
+
+.panel-body {
+  padding: 1.5rem 2rem 1.5rem 2rem;
+}
+
+.panel-heading {
+  background-color: $primary;
+  border: 0.0625rem solid $primary;
+  color: var(--ff-white) !important;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: var(--spacer-050);
+}
+
+.formcomponents .formcomponent {
+  font-size: 1em;
+}
+
+// formio classes
+
+.formio-component-panel .panel-heading {
+  background-color: $gray-medium;
+  padding: 0.625rem 0 0.625rem 0.625rem;
+}
+
+.formio-component-panel .panel-heading .panel-title i {
+  font-size: 0.75rem;
+}
+
+.formio-error-wrapper,
+.has-error {
+  color: $danger-color;
+  border-color: $danger-color;
+}
+
+.formio-error-wrapper,
+.has-error label {
+  color: $danger-color;
+}
+
+.formio-errors .error {
+  color: $danger-color;
+}
+
+.formio-wizard-nav-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.form-control-with-icon {
+  position: relative;
+
+  .search-box-input {
+    border-radius: var(--radius-sm) !important; //TBD: To be changed to rem
+    border: 1px solid $primary;
+    background: var(--ff-white);
+    color: $gray-medium-dark;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-sm);
+    line-height: var(--text-line-height);
+    padding: var(--spacer-075) var(--spacer-100)  !important;
+    height: 2.063rem;
+
+    &:hover{
+      background-color: $primary-light !important;
+    }
+
+    &.has-value {
+      border: 2px solid $primary;
+      background: var(--ff-white);
+      color: var(--default-font-color) !important;
+      padding-right: 2rem !important;
+    }
+
+    &.is-searching {
+      color: $gray-dark !important;
+      border: 1px solid $gray-dark;
+      background-color: $gray-medium !important;
+    }
+    &::placeholder {
+      color: $gray-medium-dark !important;
+      font-size: var(--font-size-sm) !important;
+      font-weight: var(--font-weight-sm);
+    }
+    &:focus::placeholder {
+      color: $gray-medium-dark !important;
+    }
+  }
+
+  .search-box-icon {
+    position: absolute;
+    right: var(--spacer-025);
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--default-font-color);
+    padding: var(--spacer-050);
+
+    &.loading {
+      cursor: default;
+    }
+
+    .search-spinner {
+      @include spinner-base;
+      width: 0.75rem;
+      height: 0.75rem;
+      font-size: x-small;
+      position: relative;
+    }
+
+
+  }
+}
+
+
+
+/* CustomTooltip */
+.custom-tooltip .tooltip-inner {
+  background-color: $primary-light;
+  color: var(--default-font-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-sm);
+  line-height: var(--text-line-height);
+  white-space: nowrap;
+  padding: var(--spacer-050);
+  border-radius: var(--radius-sm);
+}
+
+.custom-tooltip .tooltip-arrow::before {
+  border-color: $primary-light transparent transparent transparent !important;
+}
+
+/* Custom Form.Check */
+.form-check:not(.form-switch),
+.checkbox-container{
+  .form-check-input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid $primary !important;
+    background-color: transparent;
+    position: relative;
+    float: none !important;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:checked {
+      background-color: var(--ff-white) !important;
+      border-color: $primary !important;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 4px;
+        width: 5px;
+        height: 8px;
+        border: solid $primary;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+    &:indeterminate {
+      background-color: transparent !important;
+      border-color: $primary !important;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 2px;
+        background-color: $primary;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .form-check-label {
+    color: var(--default-font-color);
+    // margin-left: var(--spacer-050);
+    // margin-top: var(--spacer-025);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-sm);
+    line-height: var(--text-line-height);
+  
+  }
+}
+
+
+
+//FormInput styles
+
+.form-control {
+  color: var(--default-font-color) !important;
+  // border-radius: var(--radius-sm) !important;
+  border: 1px solid $primary !important;
+  outline: none;
+
+  display: flex;
+  // padding: var(--spacer-050) var(--spacer-100) !important;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+
+  &:focus {
+    outline: 1px solid $primary;
+    box-shadow: none !important;
+  }
+
+  &::placeholder {
+    color: $gray-medium-dark;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-sm);
+    line-height: var(--text-line-height);
+  }
+
+  &.is-invalid {
+    background-image: none !important;
+    border: 1px solid $danger-color !important;
+
+    &:focus {
+      outline: 1px solid $danger-color !important;
+      border: 1px solid $danger-color !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &:disabled {
+    border-color: $gray-medium-dark !important;
+    background-color: $gray-medium;
+  }
+
+}
+ .required-icon {
+   margin-left: 0.188rem;
+   color: $primary !important;
+ }
+.form-group {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+
+  .with-icon {
+    padding-right: 3rem !important;
+  }
+
+  .disabled-icon svg path {
+    fill: $gray-medium-dark;
+  }
+
+  .custom-form-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .input-spinner{  
+      @include spinner-base;
+      width: 1em;
+      height: 1em;
+      position: absolute;
+      right: 1rem;
+    }
+  }
+
+  // .input-group-text {
+  //   cursor: pointer;
+  //   position: absolute;
+  //   right: var(--spacer-025);
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  //   border: none;
+  //   background: none;
+  //   color: $primary;   
+  // }
+
+  .custom-form-control-label {
+    color: var(--default-font-color);
+    font-size: var(--font-size-xs); //14px
+    font-weight: var(--font-weight-sm);
+    line-height: var(--text-line-height);
+  }
+
+  .custom-feedback {
+    display: flex;
+    color: $danger-color;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-sm);
+    line-height: var(--text-line-height);
+    margin: var(--spacer-050) 0px;
+  }
+}
+
+/* ------------------------- Badge pills style ------------------------ */
+
+.badge.rounded-pill {
+  display: inline-flex !important;
+  padding-block: var(--spacer-050) !important;
+  padding-inline: var(--spacer-100) !important;
+  color: var(--default-font-color) !important;
+  gap: var(--spacer-050) !important;
+  background-color: $pill-bg-color !important;
+  border: none !important;
+  align-items: center !important;
+  font-size: var(--font-size-sm) !important;
+  font-weight: var(--ff-badge-font-md) !important;
+  border-radius: var(--radius-lg) !important;
+  .secondary-label{
+    color: $gray-medium-dark;
+  }
+}
+
+/* ------------------------- Tabs Style ------------------------ */
+
+// .custom-tabs {
+//   .nav-link {
+//     background-color: transparent !important;
+//     font-weight: var(--font-weight-xl) !important;
+//     color: $primary !important; 
+//     border: none !important;
+//     display: flex !important;
+//     align-items: flex-start !important;
+//     padding: 0 0 var(--spacer-050) 0 !important;
+
+//     &.active {
+//       border-bottom: 0.125rem solid $gray-darkest !important;
+//       background-color: transparent !important;
+//       color: $gray-darkest !important;
+//     }
+//   }
+
+//   &.nav-tabs {
+//     border-bottom: none !important;
+//   }
+// }
+
+
+
+.tabs {
+  margin-right: calc(0px - $paddingLvl2LR);
+  margin-left: calc(0px - $paddingLvl2LR);
+
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  width: calc( 100% + ($paddingLvl2LR * 2));
+
+  &.template-selection{
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 100%;
+    .form-tab{
+      padding: 0px !important;
+    }
+  }
+  // for when Tabs component is created
+  // .nav {
+  //   overflow-x: scroll;
+  //   width: 100%;
+  // }
+
+  // Support both old nav structure and new ul structure for React Bootstrap v2.10.6
+  nav,
+  ul.nav {
+    display: flex;
+    flex-direction: row;
+    // width: max-content;
+    width: auto;
+    gap: $paddingLvl2MinS;
+    
+    margin-right: $paddingLvl2LR;
+    margin-left: $paddingLvl2LR;
+
+    border-bottom: $lineThin solid $gray-light;
+
+    & > p {
+      @include textBaseHightlight($fontSectionHead);
+    }
+
+    // Support both old anchor tags and new button elements
+    a,
+    a.nav-link,
+    button.nav-link {
+      $override-font-base: 1rem; // fontBase was 1rem and now it is 0.5rem. override it to 1rem to match the old style. The change as made as part of the ticket bugfix/fwf-5810
+      @include textBaseHightlight($override-font-base, $primary-color);
+      @include clickableFeedback1();
+
+      padding: 0;
+      padding-bottom: $base;
+
+      margin: 0 !important;
+      margin-bottom: calc(0px - $lineThin) !important;
+
+      border: none !important;
+      border-bottom: $lineThick solid $transparent !important;
+      background: transparent !important; // Ensure button background is transparent
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &.active {
+        color: $gray-darkest;
+
+        border-bottom: $lineThick solid $gray-darkest !important;
+      }
+    }
+
+    // Style for list items in new React Bootstrap v2.10.6 structure
+    li.nav-item {
+      display: flex;
+      
+      button.nav-link {
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
+
+  .tab-content {
+    @extend .custom-scroll;
+
+    overflow-y: auto;
+
+    scrollbar-gutter: stable;
+
+    & > div {
+      @include paddingLvl2();
+
+      padding-right: calc($paddingLvl2LR - $scrollBarWidth) !important;
+
+      // margin-bottom: calc( 0px - $paddingLvl2TB);
+    }
+  }
+}
+
+/* ------------------------- Radio Button Style ------------------------ */
+
+
+.form-check-input[type="checkbox"] {
+  border-color: $primary !important;
+  &:checked{
+    background-color: $primary !important;
+  }
+  &:focus{
+    box-shadow: none !important;
+  }
+}
+
+
+
+.valiation-astrisk {
+  color: $primary;
+}
+//for not allowing for edit in preview
+.form-preview{
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.form-preview-tab {
+  padding: var(--spacer-200);
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dropdown-main {
+  display: block !important;
+  padding: 0 !important;
+
+  .dropdown-menu.show {
+    width: 100% !important;
+    overflow: hidden !important;
+    padding: 0.4375rem !important;
+    display: block !important;
+  }
+
+  .dropdown-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--font-size-xs)!important;
+    font-weight: var(--font-weight-sm) !important;
+  }
+
+  .btn.btn-primary,
+  .btn.btn-success,
+  .btn.btn-success:hover {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: $white !important;
+    color: $black !important;
+    display: flex !important;
+    align-items: left !important;
+    justify-content: start !important;
+    font-size: var(--font-size-xs)!important;
+    font-weight: var(--font-weight-sm) !important;
+  }
+
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}
+
+.dashed-line {
+  width: 8.8125rem;
+  border-top: 0.1875rem dashed $gray-medium-dark;
+}
+.multiple-select-label {
+  padding-bottom: var(--spacer-050);
+  color: $gray-darkest;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-sm);
+  line-height: var(--text-line-height);
+}
+
+
+
+
+
+.userform-wrapper{
+  display: flex;
+  flex-direction: column;
+  
+  .user-form-container-with-wizard,
+  .user-form-container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: var(--spacer-100);
+    padding: var(--spacer-200) var(--spacer-225);
+    background-color: $white;
+    border-radius: var(--radius-md)!important;
+    min-width: 75vw;
+  }
+  .user-form-container {
+    height: calc(100vh - var(--client-nav));
+  }
+  .user-form-container-with-wizard {
+    height: calc(100vh - var(--client-nav));
+  }
+
+}
+
+//custom switch for sdpr
+.custom-switch-checkbox {
+  background-color: #EDEBE9;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border: 2px solid #898785;
+    border-radius: 50%;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    transition: all 0.2s ease;
+  }
+  &:hover:not(:checked):after {
+    border-color: #353433;
+  }
+  &:checked {
+    background-color: var(--ff-primary);
+    border: none;
+    
+    &:after {
+      background-color: white;
+      border-color: var(--ff-primary);
+      left: 100%;
+      transform: translate(-100%, -50%);
+    }
+  }
+  
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.btn-danger{
+  background-color: var(--default-danger-color) !important;
+}
+
+div.text-danger,
+p.text-danger,
+i.text-danger,
+span.text-danger,
+.btn-link.text-danger,
+.modal-title.text-danger {
+  color: var(--default-danger-color) !important;
+}
+
+.custom-checkbox-container {
+  display: flex;
+  background-color: $white-color !important;
+  color: $primary !important;
+  padding :  var(--spacer-050) var(--spacer-075) !important;
+  gap:var(--spacer-050) !important;
+  border: 1px solid $primary !important;
+  border-radius: var(--radius-sm) !important;
+  width: inherit !important;
+  &:hover {
+     opacity: 0.9 !important;
+  }
+  &.checked{
+    background-color: $primary !important;
+    color: $white-color !important;
+  }
+  .form-check-input[type="checkbox"]{
+    border: 2px solid $primary !important;
+    margin-top: 0px !important;
+  &:checked{
+    border-color:$white-color !important;
+  }
+  }
+  .assign-check-input { 
+    padding: var(--spacer-050);
+    border-radius: 4px;
+  }
+  .custom-checkbox-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-xl);
+    height: 19px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ------------------------- ReusableTable Styles ------------------------ */
+
+.reusable-table {
+  // Expansion row styling
+  .expansion-row {
+    background-color: transparent;
+    
+    &:hover {
+      background-color: transparent !important;
+    }
+    
+    .MuiDataGrid-cell {
+      border: none;
+      padding: 16px !important;
+      overflow: visible !important;
+    }
+    
+    // Hide other columns in expansion rows
+    .MuiDataGrid-cell:not(:first-of-type) {
+      width: 100% !important;
+    }
+    
+    // Make first cell of expansion row span full width
+    .MuiDataGrid-cell:first-of-type {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 100% !important;
+      left: 0 !important;
+      padding: 0 8px !important;
+      overflow: visible !important;
+    }
+  }
+  
+  // Column separator (when disableColumnResize is true)
+  &.disable-column-resize .MuiDataGrid-columnSeparator {
+    display: none !important;
+  }
+  
+  // AutoHeight styles
+  &.auto-height {
+    height: auto !important;
+    
+    .MuiDataGrid-root {
+      height: auto !important;
+      min-height: auto !important;
+    }
+    
+    .MuiDataGrid-virtualScroller {
+      height: auto !important;
+      min-height: 450px !important;
+      overflow: visible !important;
+    }
+    
+    .MuiDataGrid-virtualScrollerContent {
+      height: auto !important;
+    }
+    
+    .MuiDataGrid-main {
+      height: auto !important;
+    }
+  }
+}
